@@ -5,4 +5,7 @@ export default defineConfig({
   site: "https://nordisk-lavabila.vercel.app",
   output: "server",
   adapter: vercel(),
+  security: {
+    checkOrigin: false,
+  },
 });

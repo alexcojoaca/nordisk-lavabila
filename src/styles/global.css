@@ -554,6 +554,22 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
 .login-fold .notice { margin-top: 14px; }
 .account { padding-top: 28px; }
 .account h1 { font-size: clamp(32px, 5vw, 48px); }
+.account-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+  gap: 28px 40px;
+  align-items: start;
+}
+.account-card { grid-column: 2; grid-row: 1 / span 3; }
+.account-panel {
+  scroll-margin-top: 88px;
+  padding-top: 8px;
+}
+.account-panel h2 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
 .user-menu {
   display: grid;
   gap: 8px;
@@ -606,6 +622,8 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
   .blue-page .form { gap: 10px; }
   .story p { font-size: 16px; }
   .account { padding-top: 8px; }
+  .account-layout { grid-template-columns: 1fr; gap: 18px; }
+  .account-card { grid-column: auto; grid-row: auto; max-width: 100%; }
 }
 
 .story {

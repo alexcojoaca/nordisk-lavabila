@@ -10,7 +10,8 @@ const id = readSigned(Astro.cookies.get("nordisk_member")?.value);
 const subscriber = id ? await findSubscriber(id) : null;
 if (!subscriber) return Astro.redirect("/blue-card");
 
-const walletNote = Astro.url.searchParams.get("portofel") === "1";
+const saved = Astro.url.searchParams.get("salvat");
+const error = Astro.url.searchParams.get("eroare");
 const name = `${subscriber.firstName} ${subscriber.lastName}`;
 ---
 
@@ -18,22 +19,63 @@ const name = `${subscriber.firstName} ${subscriber.lastName}`;
   <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
   <main class="blue-page">
     <section class="section account">
-      <div class="wrap">
-        <p class="kicker">Cont</p>
-        <h1>{name}</h1>
-        <p class="deck">{subscriber.cardCode}</p>
-        {walletNote && <p class="notice bad">Portofelul Apple și Google se activează după ce Nordisk își pune certificatul. Până atunci cardul rămâne aici.</p>}
-        <nav class="user-menu" aria-label="Cont">
-          <a href="#cardul">Cardul meu</a>
-          <a href="/api/wallet/apple">Apple Wallet</a>
-          <a href="/api/wallet/google">Google Wallet</a>
-          <form method="post" action="/api/blue-card/logout">
-            <button type="submit">Ieși</button>
-          </form>
-        </nav>
+      <div class="wrap account-layout">
+        <div>
+          <p class="kicker">Contul tău</p>
+          <h1>{name}</h1>
+          <p class="deck">{subscriber.cardCode}</p>
+          <nav class="user-menu" aria-label="Setări">
+            <a href="#cardul">Cardul meu</a>
+            <a href="#profil">Profil</a>
+            <a href="#parola">Schimbă parola</a>
+            <form method="post" action="/api/blue-card/logout">
+              <button type="submit">Deconectare</button>
+            </form>
+          </nav>
+        </div>
+
         <div class="account-card" id="cardul">
           <BlueCardFace name={name} code={subscriber.cardCode} />
         </div>
+
+        <section class="account-panel" id="profil">
+          <h2>Profil</h2>
+          {saved === "profil" && <p class="notice">Profilul a fost salvat.</p>}
+          {error === "profil" && <p class="notice bad">Completează prenumele, numele și telefonul.</p>}
+          {error === "telefon" && <p class="notice bad">Acest număr este folosit de alt card.</p>}
+          <form class="form" method="post" action="/api/blue-card/profile">
+            <label>
+              Prenume
+              <input name="firstName" value={subscriber.firstName} autocomplete="given-name" required />
+            </label>
+            <label>
+              Nume
+              <input name="lastName" value={subscriber.lastName} autocomplete="family-name" required />
+            </label>
+            <label>
+              Număr de telefon
+              <input name="phone" type="tel" value={subscriber.phone} autocomplete="tel" required />
+            </label>
+            <button class="btn" type="submit">Salvează profilul</button>
+          </form>
+        </section>
+
+        <section class="account-panel" id="parola">
+          <h2>Parolă</h2>
+          {saved === "parola" && <p class="notice">Parola a fost schimbată.</p>}
+          {error === "parola" && <p class="notice bad">Parola actuală nu se potrivește, sau cea nouă are mai puțin de 6 caractere.</p>}
+          <form class="form" method="post" action="/api/blue-card/password">
+            <label>
+              Parola actuală
+              <input name="current" type="password" autocomplete="current-password" required />
+            </label>
+            <label>
+              Parola nouă
+              <input name="next" type="password" autocomplete="new-password" minlength="6" required />
+            </label>
+            <button class="btn" type="submit">Schimbă parola</button>
+          </form>
+        </section>
       </div>
     </section>
   </main>

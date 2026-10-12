@@ -312,3 +312,58 @@ export async function deleteMessage(id: string) {
   const { error } = await supabase.from("messages").delete().eq("id", id);
   if (error) throw error;
 }
+
+export async function updateProfile(
+  id: string,
+  input: { firstName: string; lastName: string; phone: string; phoneKey: string },
+) {
+  const supabase = db();
+  if (!supabase) {
+    return updateFile((store) => {
+      const taken = store.subscribers.some((item) => item.phoneKey === input.phoneKey && item.id !== id);
+      const item = store.subscribers.find((entry) => entry.id === id);
+      if (!item || taken) return null;
+      item.firstName = input.firstName;
+      item.lastName = input.lastName;
+      item.phone = input.phone;
+      item.phoneKey = input.phoneKey;
+      return item;
+    });
+  }
+
+  const taken = await findByPhone(input.phoneKey);
+  if (taken && taken.id !== id) return null;
+  const { data, error } = await supabase
+    .from("subscribers")
+    .update({
+      first_name: input.firstName,
+      last_name: input.lastName,
+      phone: input.phone,
+      phone_key: input.phoneKey,
+    })
+    .eq("id", id)
+    .select("*")
+    .maybeSingle();
+  if (error) throw error;
+  return data ? toSubscriber(data as SubscriberRow) : null;
+}
+
+export async function updatePassword(id: string, passwordHash: string) {
+  const supabase = db();
+  if (!supabase) {
+    return updateFile((store) => {
+      const item = store.subscribers.find((entry) => entry.id === id);
+      if (!item) return null;
+      item.passwordHash = passwordHash;
+      return item;
+    });
+  }
+  const { data, error } = await supabase
+    .from("subscribers")
+    .update({ password_hash: passwordHash })
+    .eq("id", id)
+    .select("*")
+    .maybeSingle();
+  if (error) throw error;
+  return data ? toSubscriber(data as SubscriberRow) : null;
+}

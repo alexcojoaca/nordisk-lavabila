@@ -35,7 +35,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     phone,
     phoneKey,
     passwordHash: hashPassword(password),
-  });
+  }).catch(() => undefined);
+  if (subscriber === undefined) return go(request, "/blue-card?eroare=server#formular");
   if (!subscriber) return go(request, "/blue-card?eroare=exista#formular");
 
   cookies.set("nordisk_member", sign(subscriber.id), cookieOptions(request));
