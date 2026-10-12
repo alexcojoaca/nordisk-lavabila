@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
+import BlueCardFace from "../components/BlueCardFace.astro";
 import { products } from "../data/products";
 ---
 
@@ -52,28 +53,13 @@ import { products } from "../data/products";
         <div class="card-copy">
           <p class="kicker">Blue Card</p>
           <h2>Fă-ți Blue Card</h2>
-          <p>Certificarea pentru meseriașii verificați. Vezi beneficiile.</p>
-          <a class="more" href="/blue-card">Vezi beneficiile
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
+          <p>Certificarea pentru meseriașii verificați.</p>
         </div>
-        <a class="paycard" href="/blue-card" aria-label="Vezi pagina Blue Card">
-          <span class="stamp">Nordisk</span>
-          <span class="paycard-mid">
-            <span class="paycard-kicker">Certificare</span>
-            <span class="paycard-name">Blue Card</span>
-          </span>
-          <span class="pay-foot">
-            <span>Nordisk Grup</span>
-            <span class="card-mark">NG</span>
-          </span>
-        </a>
+        <BlueCardFace href="/blue-card" />
       </div>
     </section>
 
     <Contact />
   </main>
-  <Footer label="Nordisk" />
+  <Footer />
 </Base>

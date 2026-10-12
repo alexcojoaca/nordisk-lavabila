@@ -1,0 +1,38 @@
+---
+import Base from "../../layouts/Base.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import BlueCardFace from "../../components/BlueCardFace.astro";
+import { readSigned } from "../../lib/auth";
+import { findSubscriber } from "../../lib/store";
+
+const id = readSigned(Astro.cookies.get("nordisk_member")?.value);
+const subscriber = id ? await findSubscriber(id) : null;
+if (!subscriber) return Astro.redirect("/blue-card");
+
+const walletNote = Astro.url.searchParams.get("portofel") === "1";
+const name = `${subscriber.firstName} ${subscriber.lastName}`;
+---
+
+<Base page="company-page" title="Blue Card — Nordisk Grup" description="Cardul tău Blue Card.">
+  <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
+  <main>
+    <section>
+      <div class="wrap intro">
+        <div class="intro-copy">
+          <p class="kicker">Cardul tău</p>
+          <h1>{name}</h1>
+          <p class="deck">{subscriber.cardCode}</p>
+          <p class="lead">Numele și codul sunt pe card. Le poți arăta de aici.</p>
+          {walletNote && <p class="notice bad">Portofelul Apple și Google se activează după ce Nordisk își pune certificatul. Până atunci cardul rămâne aici.</p>}
+          <div class="wallet-actions">
+            <a class="btn" href="/api/wallet/apple">Adaugă în Apple Wallet</a>
+            <a class="btn ghost" href="/api/wallet/google">Adaugă în Google Wallet</a>
+          </div>
+        </div>
+        <BlueCardFace name={name} code={subscriber.cardCode} />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

@@ -4,6 +4,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
 import { gallery, generalContract, heroPhoto, projects, services } from "../data/company";
+
+const sent = Astro.url.searchParams.get("trimis") === "1";
+const formError = Astro.url.searchParams.get("eroare") === "1";
 ---
 
 <Base
@@ -81,7 +84,30 @@ import { gallery, generalContract, heroPhoto, projects, services } from "../data
       </div>
     </section>
 
+    <section class="section" id="mesaj">
+      <div class="wrap">
+        <h2 class="section-title">Scrie-ne</h2>
+        {sent && <p class="notice">Mesajul a ajuns la Nordisk.</p>}
+        {formError && <p class="notice bad">Completează numele, telefonul sau mailul și ce îți dorești.</p>}
+        <form class="form" method="post" action="/api/contact">
+          <label>
+            Nume
+            <input name="name" autocomplete="name" required />
+          </label>
+          <label>
+            Telefon sau mail
+            <input name="contact" autocomplete="email" required />
+          </label>
+          <label>
+            Ce îți dorești
+            <textarea name="message" required></textarea>
+          </label>
+          <button class="btn" type="submit">Trimite</button>
+        </form>
+      </div>
+    </section>
+
     <Contact note="Pentru o lucrare nouă sau pentru o etapă de șantier." />
   </main>
-  <Footer label="Nordisk Grup" linkHref="/" linkLabel="Produse" />
+  <Footer />
 </Base>

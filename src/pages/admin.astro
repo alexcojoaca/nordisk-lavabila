@@ -1,0 +1,96 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { readSigned } from "../lib/auth";
+import { databaseReady, listMessages, listSubscribers } from "../lib/store";
+
+const loggedIn = readSigned(Astro.cookies.get("nordisk_admin")?.value) === "admin";
+const temporaryStore = !databaseReady();
+const error = Astro.url.searchParams.get("eroare") === "1";
+const subscribers = loggedIn ? await listSubscribers() : [];
+const messages = loggedIn ? await listMessages() : [];
+
+function when(iso: string) {
+  return new Date(iso).toLocaleString("ro-RO", { dateStyle: "medium", timeStyle: "short" });
+}
+---
+
+<Base page="company-page" title="Panou — Nordisk" description="Panoul Nordisk.">
+  <Header label="Nordisk" href="/" rightLabel="Blue Card" rightHref="/blue-card" />
+  <main>
+    {
+      !loggedIn ? (
+        <section class="wrap login-box">
+          <p class="kicker">Nordisk</p>
+          <h1>Panou</h1>
+          {error && <p class="notice bad">Mailul sau parola nu se potrivesc.</p>}
+          <form class="form" method="post" action="/api/admin/login">
+            <label>
+              Mail
+              <input name="email" type="email" autocomplete="username" required />
+            </label>
+            <label>
+              Parolă
+              <input name="password" type="password" autocomplete="current-password" required />
+            </label>
+            <button class="btn" type="submit">Intră</button>
+          </form>
+        </section>
+      ) : (
+        <section class="wrap admin">
+          <div class="form-row">
+            <h1>Panou</h1>
+            <form method="post" action="/api/admin/logout">
+              <button class="btn ghost" type="submit">Ieși</button>
+            </form>
+          </div>
+          {temporaryStore && <p class="notice">Baza de date nu e legată încă. Lista se poate goli.</p>}
+
+          <div class="admin-block" id="cereri">
+            <h2 class="section-title">Cereri Nordisk</h2>
+            {messages.length === 0 && <p class="empty">Nicio cerere.</p>}
+            {messages.map((item) => (
+              <article class="admin-row">
+                <strong>{item.name}</strong>
+                <span>{item.contact}</span>
+                <p>{item.message}</p>
+                <span class="muted">{when(item.createdAt)}</span>
+                <form method="post" action="/api/admin/message">
+                  <input type="hidden" name="id" value={item.id} />
+                  <button class="btn danger" type="submit">Șterge</button>
+                </form>
+              </article>
+            ))}
+          </div>
+
+          <div class="admin-block" id="abonati">
+            <h2 class="section-title">Abonați Blue Card</h2>
+            {subscribers.length === 0 && <p class="empty">Niciun abonat.</p>}
+            {subscribers.map((item) => (
+              <article class="admin-row">
+                <strong>{item.firstName} {item.lastName}</strong>
+                <span>{item.phone}</span>
+                <span>{item.cardCode}</span>
+                <span class="muted">{item.paid ? "Plătit" : "Neplătit"} · {when(item.createdAt)}</span>
+                <div class="row-actions">
+                  <form method="post" action="/api/admin/subscriber">
+                    <input type="hidden" name="id" value={item.id} />
+                    <input type="hidden" name="action" value={item.paid ? "unpaid" : "paid"} />
+                    <button class="btn ghost" type="submit">{item.paid ? "Marchează neplătit" : "Marchează plătit"}</button>
+                  </form>
+                  <form method="post" action="/api/admin/subscriber">
+                    <input type="hidden" name="id" value={item.id} />
+                    <input type="hidden" name="action" value="delete" />
+                    <button class="btn danger" type="submit">Șterge abonatul</button>
+                  </form>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </main>
+  <Footer />
+</Base>

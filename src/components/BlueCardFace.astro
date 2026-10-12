@@ -1,0 +1,51 @@
+---
+interface Props {
+  href?: string;
+  spin?: boolean;
+  name?: string;
+  code?: string;
+}
+
+const { href, spin = false, name, code } = Astro.props;
+---
+
+<div class:list={["spin-scene", { spinning: spin }]}>
+  <div class="spin-card">
+    {
+      href ? (
+        <a class="paycard spin-face" href={href} aria-label="Deschide pagina Blue Card">
+          <span class="stamp">Nordisk</span>
+          <span class="paycard-mid">
+            <span class="paycard-name">Blue Card</span>
+          </span>
+          <span class="pay-foot">
+            <span>Nordisk Grup</span>
+            <span class="card-mark">NG</span>
+          </span>
+        </a>
+      ) : (
+        <div class="paycard spin-face">
+          <span class="stamp">Nordisk</span>
+          <span class="paycard-mid">
+            {name ? <span class="holder">{name}</span> : <span class="paycard-name">Blue Card</span>}
+            {name && <span class="paycard-name small">Blue Card</span>}
+          </span>
+          <span class="pay-foot">
+            <span>{code || "Nordisk Grup"}</span>
+            <span class="card-mark">NG</span>
+          </span>
+        </div>
+      )
+    }
+    <div class="paycard spin-face spin-back" aria-hidden="true">
+      <span class="stamp">Nordisk</span>
+      <span class="paycard-mid">
+        <span class="paycard-name">Blue Card</span>
+      </span>
+      <span class="pay-foot">
+        <span>Carnet digital</span>
+        <span class="card-mark">NG</span>
+      </span>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,15 @@ import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
+import BlueCardFace from "../components/BlueCardFace.astro";
 import { benefits } from "../data/blue-card";
-import { site } from "../data/site";
+
+const error = Astro.url.searchParams.get("eroare");
+const errors: Record<string, string> = {
+  completeaza: "Completează prenumele, numele, telefonul și o parolă de cel puțin 6 caractere.",
+  exista: "Acest număr are deja un Blue Card. Intră cu telefonul și parola.",
+  intrare: "Telefonul sau parola nu se potrivesc.",
+};
 ---
 
 <Base
@@ -12,34 +19,56 @@ import { site } from "../data/site";
   title="Blue Card — Nordisk Grup"
   description="Blue Card este certificarea digitală Nordisk Grup pentru meseriașii din construcții. Profil verificat, vizibilitate și cereri de lucrări."
 >
-  <Header label="Nordisk" href="/despre" />
+  <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
   <main id="top">
     <section>
       <div class="wrap intro">
         <div class="intro-copy">
-          <p class="kicker">Certificare</p>
+          <p class="kicker">Nordisk Grup</p>
           <h1>Blue Card</h1>
           <p class="deck">Carnetul digital al meseriașului verificat</p>
           <p class="lead">
-            Blue Card este certificarea pe care Nordisk Grup o emite meseriașilor din construcții, după un proces de verificare. Clienții recunosc mai ușor un profesionist cu experiență. Meseriașul capătă vizibilitate și un profil pe care îl poate arăta.
+            Completezi datele și primești cardul, cu numele tău și un cod unic.
           </p>
-          <a class="more" href={site.blueCardUrl}>Cere Blue Card
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
+          {error && errors[error] && <p class="notice bad">{errors[error]}</p>}
+          <form class="form" method="post" action="/api/blue-card/register">
+            <label>
+              Prenume
+              <input name="firstName" autocomplete="given-name" required />
+            </label>
+            <label>
+              Nume
+              <input name="lastName" autocomplete="family-name" required />
+            </label>
+            <label>
+              Număr de telefon
+              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+            </label>
+            <label>
+              Parolă
+              <input name="password" type="password" autocomplete="new-password" minlength="6" required />
+            </label>
+            <button class="btn" type="submit">Primește Blue Card</button>
+          </form>
         </div>
-        <div class="paycard showcase" aria-hidden="true">
-          <span class="stamp">Nordisk</span>
-          <span class="paycard-mid">
-            <span class="paycard-kicker">Certificare</span>
-            <span class="paycard-name">Blue Card</span>
-          </span>
-          <span class="pay-foot">
-            <span>Nordisk Grup</span>
-            <span class="card-mark">NG</span>
-          </span>
-        </div>
+        <BlueCardFace spin />
+      </div>
+    </section>
+
+    <section class="section" id="intrare">
+      <div class="wrap">
+        <h2 class="section-title">Ai deja Blue Card</h2>
+        <form class="form" method="post" action="/api/blue-card/login">
+          <label>
+            Număr de telefon
+            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <label>
+            Parolă
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="btn" type="submit">Deschide cardul</button>
+        </form>
       </div>
     </section>
 
@@ -72,31 +101,10 @@ import { site } from "../data/site";
             ))
           }
         </div>
-        <div class="note">
-          <h3>Fără promisiuni goale</h3>
-          <p>Acestea sunt beneficiile prezentate de Nordisk Grup. Blue Card nu garantează un anumit număr de clienți sau de lucrări.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="portofel">
-      <div class="wrap">
-        <h2 class="section-title">În telefon</h2>
-        <div class="services">
-          <article>
-            <h3>Apple Wallet</h3>
-            <p>Pe iPhone, cardul emis poate sta în Portofel, lângă celelalte carduri. Îl deschizi când ești pe șantier sau la client.</p>
-          </article>
-          <article>
-            <h3>Google Wallet</h3>
-            <p>Pe Android, același carnet digital se păstrează în Google Wallet. Nu mai cauți o poză prin telefon.</p>
-          </article>
-        </div>
-        <p class="lead wallet-note">Cardul se adaugă în portofel după ce Nordisk ți-l emite. Până atunci, cererea se face de aici sau la telefon.</p>
       </div>
     </section>
 
     <Contact note="Pentru Blue Card sau pentru o verificare." />
   </main>
-  <Footer label="Nordisk Grup" linkHref="/" linkLabel="Produse" />
+  <Footer />
 </Base>

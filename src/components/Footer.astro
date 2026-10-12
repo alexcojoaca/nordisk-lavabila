@@ -1,16 +1,24 @@
 ---
-interface Props {
-  label: string;
-  linkHref?: string;
-  linkLabel?: string;
-}
-
-const { label, linkHref, linkLabel } = Astro.props;
+import { site } from "../data/site";
 ---
 
-<footer>
-  <div class="wrap foot">
-    <span>{label}</span>
-    {linkHref && linkLabel && <a href={linkHref}>{linkLabel}</a>}
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="logo" href="/">Nordisk</a>
+      <p>Construcții și vopsele.</p>
+    </div>
+    <nav aria-label="Pagini">
+      <a href="/">Produse</a>
+      <a href="/despre">Firmă</a>
+      <a href="/blue-card">Blue Card</a>
+    </nav>
+    <div>
+      <p class="footer-label">Date de contact</p>
+      <a class="footer-phone" href={site.phoneHref}>{site.phoneDisplay}</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>Nordisk Grup</span>
   </div>
 </footer>
