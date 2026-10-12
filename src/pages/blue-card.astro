@@ -27,12 +27,9 @@ const errors: Record<string, string> = {
           <p class="kicker">Nordisk Grup</p>
           <h1>Blue Card</h1>
           <p class="deck">Carnetul digital al meseriașului verificat</p>
-          <p class="lead">
-            Completezi datele și primești cardul, cu numele tău și un cod unic.
-          </p>
           <a class="btn" href="#formular">Fă-ți Blue Card</a>
         </div>
-        <BlueCardFace spin />
+        <BlueCardFace />
       </div>
     </section>
 
@@ -70,24 +67,6 @@ const errors: Record<string, string> = {
 
     <Contact note="Pentru Blue Card sau pentru o verificare." />
 
-    <section class="section" id="intrare">
-      <div class="wrap">
-        <h2 class="section-title">Ai deja Blue Card</h2>
-        {error === "intrare" && <p class="notice bad">{errors.intrare}</p>}
-        <form class="form" method="post" action="/api/blue-card/login">
-          <label>
-            Număr de telefon
-            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
-          </label>
-          <label>
-            Parolă
-            <input name="password" type="password" autocomplete="current-password" required />
-          </label>
-          <button class="btn" type="submit">Deschide cardul</button>
-        </form>
-      </div>
-    </section>
-
     <section class="section" id="formular">
       <div class="wrap">
         <h2 class="section-title">Primește Blue Card</h2>
@@ -111,6 +90,21 @@ const errors: Record<string, string> = {
           </label>
           <button class="btn" type="submit">Primește Blue Card</button>
         </form>
+        <details class="login-fold" id="conectare" open={error === "intrare"}>
+          <summary class="btn ghost">Conectare</summary>
+          {error === "intrare" && <p class="notice bad">{errors.intrare}</p>}
+          <form class="form" method="post" action="/api/blue-card/login">
+            <label>
+              Număr de telefon
+              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+            </label>
+            <label>
+              Parolă
+              <input name="password" type="password" autocomplete="current-password" required />
+            </label>
+            <button class="btn" type="submit">Intră</button>
+          </form>
+        </details>
       </div>
     </section>
   </main>

@@ -529,56 +529,73 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
   to { transform: rotateX(12deg) rotateY(360deg); }
 }
 #formular,
-#intrare { scroll-margin-top: 88px; }
+#conectare { scroll-margin-top: 88px; }
 .intro-copy .btn { margin-top: 22px; }
 .blue-page .spin-scene {
   width: min(100%, 420px);
-  margin-inline: auto;
-  padding: 8px 12px 4px;
+}
+.login-fold {
+  margin-top: 18px;
+  max-width: 440px;
+}
+.login-fold summary {
+  list-style: none;
+  cursor: pointer;
+}
+.login-fold summary::-webkit-details-marker { display: none; }
+.login-fold .form { margin-top: 14px; }
+.login-fold .notice { margin-top: 14px; }
+.account { padding-top: 28px; }
+.account h1 { font-size: clamp(32px, 5vw, 48px); }
+.user-menu {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+  margin-top: 20px;
+}
+.user-menu a,
+.user-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  background: #fffcf8;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+.account-card {
+  max-width: 380px;
+  margin-top: 22px;
 }
 @media (max-width: 800px) {
-  .blue-page { text-align: center; }
-  .blue-page .kicker { justify-content: center; }
+  .blue-page { text-align: left; }
   .blue-page .intro {
-    justify-items: center;
-    gap: 0;
-    padding: 20px 0 0;
+    gap: 18px;
+    padding: 18px 0 4px;
   }
-  .blue-page .intro-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0;
-  }
-  .blue-page h1 { font-size: 40px; }
+  .blue-page .intro-copy { padding-top: 0; }
+  .blue-page h1 { font-size: 34px; }
   .blue-page .deck {
-    max-width: 18ch;
-    margin-top: 10px;
-    font-size: 22px;
+    max-width: 20ch;
+    margin: 10px 0 0;
+    font-size: 20px;
   }
-  .blue-page .lead {
-    max-width: 30ch;
-    margin: 10px auto 0;
-    font-size: 16px;
-  }
-  .blue-page .intro-copy .btn { margin-top: 14px; }
+  .blue-page .intro-copy .btn { margin-top: 18px; }
   .blue-page .spin-scene {
-    width: min(100%, 270px);
-    padding: 18px 0 0;
+    width: min(100%, 300px);
+    padding: 0;
   }
-  .blue-page .section { padding: 22px 0; }
+  .blue-page .section { padding: 20px 0; }
   .blue-page .section-title { margin-bottom: 12px; }
   .blue-page .services { gap: 16px; }
-  .blue-page .services p { margin-inline: auto; }
-  .blue-page .form {
-    width: 100%;
-    margin-inline: auto;
-    text-align: left;
-    gap: 12px;
-  }
+  .blue-page .form { gap: 12px; }
   .blue-page .contact { padding: 4px 0 8px; }
-  .blue-page .site-footer { text-align: center; }
-  .blue-page .site-footer nav { align-items: center; }
+  .account { padding-top: 8px; }
 }
 
 .site-footer {

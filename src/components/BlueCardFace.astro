@@ -13,7 +13,7 @@ const { href, spin = false, name, code } = Astro.props;
   <div class="spin-card">
     {
       href ? (
-        <a class="paycard spin-face" href={href} aria-label="Deschide pagina Blue Card">
+        <a class="paycard" href={href} aria-label="Deschide pagina Blue Card">
           <span class="stamp">Nordisk</span>
           <span class="paycard-mid">
             <span class="paycard-name">Blue Card</span>
@@ -24,7 +24,7 @@ const { href, spin = false, name, code } = Astro.props;
           </span>
         </a>
       ) : (
-        <div class="paycard spin-face">
+        <div class="paycard">
           <span class="stamp">Nordisk</span>
           <span class="paycard-mid">
             {name ? <span class="holder">{name}</span> : <span class="paycard-name">Blue Card</span>}
@@ -37,8 +37,12 @@ const { href, spin = false, name, code } = Astro.props;
         </div>
       )
     }
-    <div class="paycard spin-face spin-back" aria-hidden="true">
-      <span class="paycard-name">Blue Card</span>
-    </div>
+    {
+      spin && (
+        <div class="paycard spin-face spin-back" aria-hidden="true">
+          <span class="paycard-name">Blue Card</span>
+        </div>
+      )
+    }
   </div>
 </div>

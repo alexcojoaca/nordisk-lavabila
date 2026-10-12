@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const subscriber = await findByPhone(phoneKey);
 
   if (!subscriber || !checkPassword(password, subscriber.passwordHash)) {
-    return Response.redirect(new URL("/blue-card?eroare=intrare#intrare", request.url), 303);
+    return Response.redirect(new URL("/blue-card?eroare=intrare#conectare", request.url), 303);
   }
 
   cookies.set("nordisk_member", sign(subscriber.id), cookieOptions(request));

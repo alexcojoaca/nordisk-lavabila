@@ -14,23 +14,26 @@ const walletNote = Astro.url.searchParams.get("portofel") === "1";
 const name = `${subscriber.firstName} ${subscriber.lastName}`;
 ---
 
-<Base page="company-page" title="Blue Card — Nordisk Grup" description="Cardul tău Blue Card.">
+<Base page="company-page" title="Cont — Blue Card" description="Contul tău Blue Card.">
   <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
-  <main>
-    <section>
-      <div class="wrap intro">
-        <div class="intro-copy">
-          <p class="kicker">Cardul tău</p>
-          <h1>{name}</h1>
-          <p class="deck">{subscriber.cardCode}</p>
-          <p class="lead">Numele și codul sunt pe card. Le poți arăta de aici.</p>
-          {walletNote && <p class="notice bad">Portofelul Apple și Google se activează după ce Nordisk își pune certificatul. Până atunci cardul rămâne aici.</p>}
-          <div class="wallet-actions">
-            <a class="btn" href="/api/wallet/apple">Adaugă în Apple Wallet</a>
-            <a class="btn ghost" href="/api/wallet/google">Adaugă în Google Wallet</a>
-          </div>
+  <main class="blue-page">
+    <section class="section account">
+      <div class="wrap">
+        <p class="kicker">Cont</p>
+        <h1>{name}</h1>
+        <p class="deck">{subscriber.cardCode}</p>
+        {walletNote && <p class="notice bad">Portofelul Apple și Google se activează după ce Nordisk își pune certificatul. Până atunci cardul rămâne aici.</p>}
+        <nav class="user-menu" aria-label="Cont">
+          <a href="#cardul">Cardul meu</a>
+          <a href="/api/wallet/apple">Apple Wallet</a>
+          <a href="/api/wallet/google">Google Wallet</a>
+          <form method="post" action="/api/blue-card/logout">
+            <button type="submit">Ieși</button>
+          </form>
+        </nav>
+        <div class="account-card" id="cardul">
+          <BlueCardFace name={name} code={subscriber.cardCode} />
         </div>
-        <BlueCardFace name={name} code={subscriber.cardCode} />
       </div>
     </section>
   </main>
