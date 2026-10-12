@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  name: string;
+  active: "card" | "profil" | "parola";
+}
+
+const { title, name, active } = Astro.props;
+
+const items = [
+  { id: "card", href: "/blue-card/cont", label: "Cardul meu", text: "Numele și codul de pe card" },
+  { id: "profil", href: "/blue-card/cont/profil", label: "Profil", text: "Prenume, nume și telefon" },
+  { id: "parola", href: "/blue-card/cont/parola", label: "Parolă", text: "Schimbă parola de intrare" },
+];
+---
+
+<Base page="company-page" title={title} description="Contul tău Blue Card.">
+  <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
+  <main class="blue-page">
+    <section class="section account">
+      <div class="wrap account-shell">
+        <aside class="account-side">
+          <p class="kicker">Contul tău</p>
+          <h1>{name}</h1>
+          <nav class="settings-menu" aria-label="Setări">
+            {
+              items.map((item) => (
+                <a href={item.href} class:list={{ active: item.id === active }} aria-current={item.id === active ? "page" : undefined}>
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.text}</small>
+                  </span>
+                  <span class="menu-go" aria-hidden="true"></span>
+                </a>
+              ))
+            }
+            <form method="post" action="/api/blue-card/logout">
+              <button type="submit">Deconectare</button>
+            </form>
+          </nav>
+        </aside>
+        <div class="account-main">
+          <slot />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

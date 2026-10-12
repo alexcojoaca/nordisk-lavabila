@@ -1,0 +1,37 @@
+---
+import AccountFrame from "../../../components/AccountFrame.astro";
+import { readSigned } from "../../../lib/auth";
+import { findSubscriber } from "../../../lib/store";
+
+const id = readSigned(Astro.cookies.get("nordisk_member")?.value);
+const subscriber = id ? await findSubscriber(id) : null;
+if (!subscriber) return Astro.redirect("/blue-card");
+
+const saved = Astro.url.searchParams.get("salvat") === "1";
+const error = Astro.url.searchParams.get("eroare");
+const name = `${subscriber.firstName} ${subscriber.lastName}`;
+---
+
+<AccountFrame title="Profil — Blue Card" name={name} active="profil">
+  <section class="account-panel">
+    <h2>Profil</h2>
+    {saved && <p class="notice">Profilul a fost salvat.</p>}
+    {error === "profil" && <p class="notice bad">Completează prenumele, numele și telefonul.</p>}
+    {error === "telefon" && <p class="notice bad">Acest număr este folosit de alt card.</p>}
+    <form class="form" method="post" action="/api/blue-card/profile">
+      <label>
+        Prenume
+        <input name="firstName" value={subscriber.firstName} autocomplete="given-name" required />
+      </label>
+      <label>
+        Nume
+        <input name="lastName" value={subscriber.lastName} autocomplete="family-name" required />
+      </label>
+      <label>
+        Număr de telefon
+        <input name="phone" type="tel" value={subscriber.phone} autocomplete="tel" required />
+      </label>
+      <button class="btn" type="submit">Salvează profilul</button>
+    </form>
+  </section>
+</AccountFrame>

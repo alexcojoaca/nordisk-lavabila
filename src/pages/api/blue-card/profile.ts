@@ -16,10 +16,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const phoneKey = digits(phone);
 
   if (firstName.length < 2 || lastName.length < 2 || phoneKey.length < 8) {
-    return redirectTo(request, "/blue-card/cont?eroare=profil#profil");
+    return redirectTo(request, "/blue-card/cont/profil?eroare=profil");
   }
 
   const saved = await updateProfile(subscriber.id, { firstName, lastName, phone, phoneKey }).catch(() => undefined);
-  if (!saved) return redirectTo(request, "/blue-card/cont?eroare=telefon#profil");
-  return redirectTo(request, "/blue-card/cont?salvat=profil#profil");
+  if (!saved) return redirectTo(request, "/blue-card/cont/profil?eroare=telefon");
+  return redirectTo(request, "/blue-card/cont/profil?salvat=1");
 };

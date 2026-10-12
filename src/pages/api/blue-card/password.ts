@@ -14,10 +14,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const next = String(form.get("next") || "");
 
   if (!checkPassword(current, subscriber.passwordHash) || next.length < 6) {
-    return redirectTo(request, "/blue-card/cont?eroare=parola#parola");
+    return redirectTo(request, "/blue-card/cont/parola?eroare=parola");
   }
 
   const saved = await updatePassword(subscriber.id, hashPassword(next)).catch(() => null);
-  if (!saved) return redirectTo(request, "/blue-card/cont?eroare=parola#parola");
-  return redirectTo(request, "/blue-card/cont?salvat=parola#parola");
+  if (!saved) return redirectTo(request, "/blue-card/cont/parola?eroare=parola");
+  return redirectTo(request, "/blue-card/cont/parola?salvat=1");
 };

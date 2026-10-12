@@ -1,0 +1,32 @@
+---
+import AccountFrame from "../../../components/AccountFrame.astro";
+import { readSigned } from "../../../lib/auth";
+import { findSubscriber } from "../../../lib/store";
+
+const id = readSigned(Astro.cookies.get("nordisk_member")?.value);
+const subscriber = id ? await findSubscriber(id) : null;
+if (!subscriber) return Astro.redirect("/blue-card");
+
+const saved = Astro.url.searchParams.get("salvat") === "1";
+const error = Astro.url.searchParams.get("eroare");
+const name = `${subscriber.firstName} ${subscriber.lastName}`;
+---
+
+<AccountFrame title="Parolă — Blue Card" name={name} active="parola">
+  <section class="account-panel">
+    <h2>Parolă</h2>
+    {saved && <p class="notice">Parola a fost schimbată.</p>}
+    {error === "parola" && <p class="notice bad">Parola actuală nu se potrivește, sau cea nouă are mai puțin de 6 caractere.</p>}
+    <form class="form" method="post" action="/api/blue-card/password">
+      <label>
+        Parola actuală
+        <input name="current" type="password" autocomplete="current-password" required />
+      </label>
+      <label>
+        Parola nouă
+        <input name="next" type="password" autocomplete="new-password" minlength="6" required />
+      </label>
+      <button class="btn" type="submit">Schimbă parola</button>
+    </form>
+  </section>
+</AccountFrame>

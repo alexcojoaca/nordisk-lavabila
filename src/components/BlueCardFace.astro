@@ -24,14 +24,14 @@ const { href, spin = false, name, code } = Astro.props;
           </span>
         </a>
       ) : (
-        <div class="paycard">
+        <div class:list={["paycard", { issued: Boolean(name) }]}>
           <span class="stamp">Nordisk</span>
           <span class="paycard-mid">
             {name ? <span class="holder">{name}</span> : <span class="paycard-name">Blue Card</span>}
             {name && <span class="paycard-name small">Blue Card</span>}
           </span>
           <span class="pay-foot">
-            <span>{code || "Nordisk Grup"}</span>
+            <span class="card-code">{code || "Nordisk Grup"}</span>
             <span class="card-mark">NG</span>
           </span>
         </div>
