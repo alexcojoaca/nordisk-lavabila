@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1c2740">
+  <meta name="description" content="Nordisk Grup construiește case, blocuri și hale. Fundații, structuri de rezistență, case la roșu și la cheie, hale și depozite. 0 755 626 756.">
+  <title>Nordisk Grup</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%232a3650'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='14' font-weight='700' fill='%23f4f2ee'%3EN%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1b2330;
+      --navy: #2a3650;
+      --navy-deep: #1c2740;
+      --label: #3d4c68;
+      --paper: #f3f1ec;
+      --sand: #e7e3da;
+      --line: #ddd8ce;
+      --muted: #4e5866;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Familjen Grotesk", "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible {
+      outline: 2px solid var(--navy);
+      outline-offset: 3px;
+    }
+    ::selection { background: #d5dbe8; color: var(--ink); }
+
+    .wrap {
+      width: min(1080px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243, 241, 236, 0.92);
+      backdrop-filter: blur(14px);
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+    }
+    .logo {
+      display: inline-flex;
+      text-decoration: none;
+      background: var(--navy);
+      color: var(--paper);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 8px 12px 9px;
+      border-radius: 3px;
+      line-height: 1;
+      font-size: 16px;
+    }
+    .nav-card {
+      margin-left: auto;
+      text-decoration: none;
+      background: var(--navy);
+      color: var(--paper);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1;
+      padding: 11px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .nav-card:hover { background: var(--navy-deep); }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      gap: 48px;
+      align-items: center;
+      padding: 64px 0 28px;
+    }
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+    .kicker::before {
+      content: "";
+      width: 11px;
+      height: 11px;
+      background: var(--navy);
+      border-radius: 1px;
+      flex: none;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+    }
+    .deck {
+      margin: 18px 0 0;
+      font-size: clamp(22px, 2.4vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+      max-width: 18ch;
+    }
+    .lead {
+      margin: 18px 0 0;
+      max-width: 38rem;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .intro figure { margin: 0; }
+    .intro img,
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+      background: #d9d5cc;
+    }
+
+    .section { padding: 48px 0; }
+    .section-title {
+      margin: 0 0 22px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 48px;
+    }
+    .services h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+    }
+    .services p,
+    .note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 46ch;
+    }
+    .note {
+      margin-top: 36px;
+      background: var(--sand);
+      border-radius: 18px;
+      padding: 28px 32px;
+    }
+    .note h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 20px;
+    }
+    .gallery figure { margin: 0; }
+    .gallery figcaption {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .jobs { margin: 0; }
+    .job {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px 28px;
+      align-items: baseline;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+    .job:last-child { border-bottom: 1px solid var(--line); }
+    .job dt {
+      margin: 0;
+      font-weight: 600;
+      font-size: 17px;
+    }
+    .job dd {
+      margin: 0;
+      color: var(--muted);
+      text-align: right;
+      font-size: 15px;
+    }
+
+    .contact { padding: 12px 0 36px; }
+    .contact h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+    .contact a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .contact p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    footer {
+      padding: 22px 0 calc(22px + env(safe-area-inset-bottom));
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
+
+    @media (max-width: 800px) {
+      .wrap { width: min(1080px, calc(100% - 32px)); }
+      .bar { min-height: 64px; }
+      .intro {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 36px 0 12px;
+      }
+      .deck { max-width: none; }
+      .lead { font-size: 17px; }
+      .section { padding: 36px 0; }
+      .services { grid-template-columns: 1fr; gap: 26px; }
+      .note { padding: 22px; }
+      .gallery { gap: 22px 12px; }
+      .job {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        padding: 14px 0;
+      }
+      .job dd { text-align: left; }
+      .contact { padding: 4px 0 28px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <a class="logo" href="#top">Nordisk</a>
+      <a class="nav-card" href="index.html#blue-card">Blue Card</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section>
+      <div class="wrap intro">
+      <div>
+        <p class="kicker">Construcții</p>
+        <h1>Nordisk Grup</h1>
+        <p class="deck">Case, blocuri și hale, de la fundație până la acoperiș</p>
+        <p class="lead">Nordisk Grup este o firmă de construcții pentru lucrări rezidențiale și industriale. Construim de la săpătură și fundație până la structură, zidărie și acoperiș. Puteți lua o casă la roșu sau la cheie, o hală, sau doar etapa de care aveți nevoie. La proiectele mari putem coordona tot șantierul.</p>
+      </div>
+      <figure>
+        <img src="poze%20cu%20lucrari/cde094df-c57c-4c9f-94fd-193815019dd6.jpg" width="768" height="1376" alt="Echipă care armează un planșeu de beton, cu macara și blocuri în fundal">
+      </figure>
+      </div>
+    </section>
+
+    <section class="section" id="lucrari">
+      <div class="wrap">
+        <h2 class="section-title">Ce executăm</h2>
+        <div class="services">
+          <article>
+            <h3>Case la roșu</h3>
+            <p>Casa ridicată până la structură, fără finisaje: săpătură, fundație, zidărie, planșee și acoperiș. Ce intră exact se stabilește în ofertă și în contract.</p>
+          </article>
+          <article>
+            <h3>Case la cheie</h3>
+            <p>Casa dusă până la mutare. Un proiect predat: 240 m² construiți, în Giulești, București.</p>
+          </article>
+          <article>
+            <h3>Fundații</h3>
+            <p>Săpătură, armare, cofrare și turnare de beton. De la fundația unei case până la radier general sau o fundație specială.</p>
+          </article>
+          <article>
+            <h3>Structuri de rezistență</h3>
+            <p>Stâlpi, grinzi, plăci și planșee din beton armat. Este scheletul care ține clădirea în picioare.</p>
+          </article>
+          <article>
+            <h3>Zidărie și acoperișuri</h3>
+            <p>Închidem construcția: pereții și acoperișul, ca locuința să aibă structura completă.</p>
+          </article>
+          <article>
+            <h3>Hale și depozite</h3>
+            <p>Construcții industriale: hale metalice, depozite și spații pentru logistică.</p>
+          </article>
+        </div>
+        <div class="note">
+          <h3>Antrepriză generală</h3>
+          <p>Un singur partener pentru tot șantierul. Coordonăm lucrările și echipele, în funcție de proiect și de contract.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">Din șantier</h2>
+        <div class="gallery">
+          <figure>
+            <img src="poze%20cu%20lucrari/5a0c50ef-18f1-431e-8bf7-0412c05f25f0.jpg" width="1120" height="1599" alt="Carcase de armătură așezate într-un șanț de fundație" loading="lazy">
+            <figcaption>Armare fundație</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/b1ca1710-1ce3-4dff-95fd-bbf0c9211394.jpg" width="896" height="1280" alt="Stâlpi de beton și cofraj de lemn pentru planșeu" loading="lazy">
+            <figcaption>Stâlpi și cofrare de planșeu</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/53a2ab94-06b3-4bd0-8acd-d0c5bf94801d.jpg" width="896" height="1280" alt="Cofraj de etaj susținut pe popi, cu muncitori pe placă" loading="lazy">
+            <figcaption>Cofrare etaj</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/841d97bd-c993-4caa-b3a3-772c1a981631.jpg" width="896" height="1280" alt="Șarpantă de lemn a unei case, cu echipa pe acoperiș" loading="lazy">
+            <figcaption>Acoperiș, casă parter</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/333347a6-03ea-458a-8a59-31f893135a6a.jpg" width="896" height="1280" alt="Scară de beton armată, încă în cofraj" loading="lazy">
+            <figcaption>Armare scară</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/42515d4d-d60b-4870-8cc4-2b4dc96e9009.jpg" width="896" height="1280" alt="Echipă care montează armătura unui planșeu, cu macara pe șantier" loading="lazy">
+            <figcaption>Armare planșeu</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/483aa00f-c8f6-4854-8e67-7e5971849de6.jpg" width="896" height="1280" alt="Placă de beton armată, înainte de turnare" loading="lazy">
+            <figcaption>Armare placă</figcaption>
+          </figure>
+          <figure>
+            <img src="poze%20cu%20lucrari/7447dbc9-1fdf-4704-ba74-54d52b495f86.jpg" width="1200" height="1600" alt="Membrană de hidroizolație la baza unui perete" loading="lazy">
+            <figcaption>Hidroizolație</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proiecte">
+      <div class="wrap">
+        <h2 class="section-title">Proiecte</h2>
+        <dl class="jobs">
+          <div class="job">
+            <dt>Armare fundație</dt>
+            <dd>Berceni, București</dd>
+          </div>
+          <div class="job">
+            <dt>Armare scară pentru bloc P+4</dt>
+            <dd>Ghencea, București</dd>
+          </div>
+          <div class="job">
+            <dt>Cofrare placă peste subsol parțial, bloc P+10</dt>
+            <dd>Băneasa, București</dd>
+          </div>
+          <div class="job">
+            <dt>Cofrare etaj pentru bloc P+5</dt>
+            <dd>Chiajna</dd>
+          </div>
+          <div class="job">
+            <dt>Armare radier general pentru o casă cu consum foarte mic de energie</dt>
+            <dd>Bragadiru</dd>
+          </div>
+          <div class="job">
+            <dt>Execuție acoperiș pentru casă parter</dt>
+            <dd>Berceni, București</dd>
+          </div>
+          <div class="job">
+            <dt>Casă la cheie, 240 m² construiți</dt>
+            <dd>Giulești, București</dd>
+          </div>
+          <div class="job">
+            <dt>Fundație specială pentru Canpack România</dt>
+            <dd>București</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <h2>Date de contact</h2>
+        <a href="tel:+40755626756">0 755 626 756</a>
+        <p>Pentru o lucrare nouă sau pentru o etapă de șantier.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span>Nordisk Grup</span>
+      <a href="index.html">Produse</a>
+    </div>
+  </footer>
+</body>
+</html>
