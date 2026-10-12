@@ -169,10 +169,14 @@ header {
 .more {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: 8px;
-  margin-top: 2px;
+  margin-top: auto;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff;
   font-weight: 600;
-  color: var(--navy);
   text-decoration: none;
 }
 .more svg { transition: transform 0.25s ease; }

@@ -26,12 +26,12 @@ const errors: Record<string, string> = {
         <div class="intro-copy">
           <p class="kicker">Nordisk Grup</p>
           <h1>Blue Card</h1>
-          <p class="deck">Meseria ta merită recunoaștere. Fă următorul pas cu Blue Card.</p>
+          <p class="deck">Meseria ta merită recunoaștere. Fă următorul pas cu Blue Card!</p>
         </div>
         <BlueCardFace />
         <div class="hero-actions">
           <a class="btn" href="#formular">Fă-ți Blue Card</a>
-          <a class="btn ghost" href="#conectare">Conectare</a>
+          <a class="btn ghost" href="#conectare">Am deja</a>
         </div>
       </div>
     </section>
@@ -40,11 +40,12 @@ const errors: Record<string, string> = {
       <div class="wrap">
         <h2 class="section-title">Ești meseriaș în construcții?</h2>
         <div class="story">
+          <p>Transformă experiența ta într-un avantaj profesional.</p>
           <p>
-            Transformă experiența ta într-un avantaj. Munca ta contează. Fie că ești zidar, faianțar, electrician, instalator, zugrav sau lucrezi în alt colț al șantierului, seriozitatea ta merită pusă în valoare.
+            Munca ta contează. Fie că ești zidar, faianțar, electrician, instalator, zugrav sau lucrezi în alt domeniu al construcțiilor, experiența și seriozitatea ta merită puse în valoare.
           </p>
           <p>
-            Blue Card de la Nordisk Grup este pentru profesioniștii din construcții care vor să facă un pas înainte și să își prezinte mai clar meseria. Îl ceri cu prenumele, numele, telefonul și o parolă. Cardul se deschide pe loc, cu numele tău pe el.
+            Blue Card de la Nordisk Grup este dedicat profesioniștilor din domeniul construcțiilor care vor să facă un pas înainte și să își prezinte mai bine experiența profesională.
           </p>
         </div>
       </div>
@@ -69,11 +70,9 @@ const errors: Record<string, string> = {
     <section class="section">
       <div class="wrap">
         <div class="story">
+          <p>Ai experiență. Acum e momentul să mergi mai departe.</p>
           <p>
-            Ai experiență. Acum e momentul să mergi mai departe.
-          </p>
-          <p>
-            Nu contează doar câți ani ai muncit, ci și cum îți construiești pasul următor. Completează formularul și vezi dacă Blue Card ți se potrivește.
+            Nu contează doar câți ani ai muncit, ci și cum îți construiești viitorul. Informează-te despre Blue Card și descoperă dacă este potrivit pentru tine.
           </p>
         </div>
       </div>
@@ -103,7 +102,7 @@ const errors: Record<string, string> = {
           <button class="btn" type="submit">Primește Blue Card</button>
         </form>
         <details class="login-fold" id="conectare" open={error === "intrare"}>
-          <summary class="btn ghost">Conectare</summary>
+          <summary class="btn ghost">Am deja</summary>
           {error === "intrare" && <p class="notice bad">{errors.intrare}</p>}
           <form class="form" method="post" action="/api/blue-card/login">
             <label>
