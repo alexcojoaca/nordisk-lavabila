@@ -531,8 +531,15 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
 #formular,
 #conectare { scroll-margin-top: 88px; }
 .intro-copy .btn { margin-top: 22px; }
-.blue-page .spin-scene {
-  width: min(100%, 420px);
+.blue-page .intro-copy .btn {
+  display: inline-flex;
+  margin-top: 28px;
+}
+.blue-page .spin-scene { width: min(100%, 440px); }
+.blue-page .paycard {
+  min-height: 0;
+  width: 100%;
+  aspect-ratio: 1.7 / 1;
 }
 .login-fold {
   margin-top: 18px;
@@ -575,27 +582,45 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
 @media (max-width: 800px) {
   .blue-page { text-align: left; }
   .blue-page .intro {
-    gap: 18px;
-    padding: 18px 0 4px;
+    gap: 14px;
+    padding: 12px 0 0;
   }
   .blue-page .intro-copy { padding-top: 0; }
-  .blue-page h1 { font-size: 34px; }
+  .blue-page h1 { font-size: 32px; }
   .blue-page .deck {
-    max-width: 20ch;
-    margin: 10px 0 0;
-    font-size: 20px;
+    max-width: none;
+    margin: 8px 0 0;
+    font-size: 18px;
   }
-  .blue-page .intro-copy .btn { margin-top: 18px; }
-  .blue-page .spin-scene {
-    width: min(100%, 300px);
-    padding: 0;
+  .blue-page .intro-copy .btn { margin-top: 22px; }
+  .blue-page .intro { min-width: 0; }
+  .blue-page .spin-scene,
+  .blue-page .spin-card { min-width: 0; max-width: 100%; }
+  .blue-page .paycard {
+    max-width: 100%;
+    padding: 18px 18px 16px;
   }
-  .blue-page .section { padding: 20px 0; }
-  .blue-page .section-title { margin-bottom: 12px; }
-  .blue-page .services { gap: 16px; }
-  .blue-page .form { gap: 12px; }
-  .blue-page .contact { padding: 4px 0 8px; }
+  .blue-page .section { padding: 16px 0; }
+  .blue-page .section-title { margin-bottom: 10px; }
+  .blue-page .services { gap: 14px; }
+  .blue-page .form { gap: 10px; }
+  .story p { font-size: 16px; }
   .account { padding-top: 8px; }
+}
+
+.story {
+  display: grid;
+  gap: 12px;
+  max-width: 68ch;
+}
+.story p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+.services.steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 800px) {
+  .services.steps { grid-template-columns: 1fr; }
 }
 
 .site-footer {

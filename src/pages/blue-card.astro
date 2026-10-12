@@ -2,7 +2,6 @@
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Contact from "../components/Contact.astro";
 import BlueCardFace from "../components/BlueCardFace.astro";
 import { benefits } from "../data/blue-card";
 
@@ -17,7 +16,7 @@ const errors: Record<string, string> = {
 <Base
   page="company-page"
   title="Blue Card — Nordisk Grup"
-  description="Blue Card este certificarea digitală Nordisk Grup pentru meseriașii din construcții. Profil verificat, vizibilitate și cereri de lucrări."
+  description="Blue Card Nordisk Grup este carnetul digital pentru meseriașii din construcții. Îl ceri cu numele și telefonul și primești cardul cu un cod unic."
 >
   <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
   <main id="top" class="blue-page">
@@ -35,15 +34,33 @@ const errors: Record<string, string> = {
 
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">Pentru cine este</h2>
-        <div class="services">
+        <h2 class="section-title">Pentru meseriași</h2>
+        <div class="story">
+          <p>
+            Blue Card este carnetul digital Nordisk Grup pentru meseriașii din construcții. Îl cer zugravii, zidarii, instalatorii, fierarii-betoniști și echipele care lucrează pe șantier și vor un card cu numele lor, nu un anunț pierdut prin telefon.
+          </p>
+          <p>
+            Înscrierea se face aici: prenume, nume, număr de telefon și o parolă. Nordisk primește datele, iar tu primești cardul, gata de arătat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">După ce apeși Primește Blue Card</h2>
+        <div class="services steps">
           <article>
-            <h3>Pentru meseriaș</h3>
-            <p>Un carnet digital de membru. Arată că ai trecut prin verificarea Nordisk și îți adună la un loc meseria, experiența și lucrările.</p>
+            <h3>1. Trimiți datele</h3>
+            <p>Prenumele, numele, telefonul și parola. Dacă numărul este deja folosit, intri cu aceeași parolă.</p>
           </article>
           <article>
-            <h3>Pentru client</h3>
-            <p>Când cauți pe cineva pentru o lucrare, Blue Card te ajută să vezi cine este verificat și ce a mai făcut, înainte să suni.</p>
+            <h3>2. Se deschide cardul</h3>
+            <p>Pagina ta de cont se deschide imediat. Pe card sunt numele tău și codul unic.</p>
+          </article>
+          <article>
+            <h3>3. Rămâne al tău</h3>
+            <p>Data viitoare apeși Conectare, scrii telefonul și parola, și cardul este tot acolo.</p>
           </article>
         </div>
       </div>
@@ -64,8 +81,6 @@ const errors: Record<string, string> = {
         </div>
       </div>
     </section>
-
-    <Contact note="Pentru Blue Card sau pentru o verificare." />
 
     <section class="section" id="formular">
       <div class="wrap">

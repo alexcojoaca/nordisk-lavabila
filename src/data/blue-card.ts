@@ -1,18 +1,18 @@
 export const benefits = [
   {
-    title: "Ești găsit mai ușor",
-    text: "Meseriașii cu Blue Card au prioritate când cineva caută pe platformă. Clienții te văd înaintea unui anunț obișnuit.",
+    title: "Cardul, pe loc",
+    text: "După formular, cardul se deschide imediat. Pe el stau numele tău și un cod unic, de forma NG- urmat de șase caractere.",
   },
   {
-    title: "Clienții au încredere",
-    text: "Profilul este verificat: experiență, fotografii de la lucrări și referințe. Asta spune mai mult decât un simplu anunț.",
+    title: "Contul tău",
+    text: "Cu telefonul și parola revii oricând. Din cont vezi cardul, îl poți arăta la client sau pe șantier și poți ieși când ai terminat.",
   },
   {
-    title: "Vezi cereri de lucrări",
-    text: "Poți consulta cererile publicate de clienți și alegi proiectele care se potrivesc cu meseria ta.",
+    title: "Un cod pentru fiecare",
+    text: "Codul nu se repetă. Nordisk îl vede împreună cu numele și telefonul, ca să știe cine s-a înscris.",
   },
   {
-    title: "Profil profesional",
-    text: "Arăți specializarea, experiența, zona în care lucrezi și portofoliul. Clientul te cunoaște înainte să te sune.",
+    title: "Pentru meseria de șantier",
+    text: "Blue Card este pentru oamenii care lucrează în construcții: zugrăveală, zidărie, instalații, fier-beton, finisaje și echipe de șantier.",
   },
 ];
