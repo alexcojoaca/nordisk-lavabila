@@ -557,6 +557,7 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
   column-gap: 48px;
   row-gap: 18px;
 }
+.blue-page .deck { max-width: 36ch; }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
