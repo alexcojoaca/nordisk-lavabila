@@ -1,0 +1,87 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import { gallery, generalContract, heroPhoto, projects, services } from "../data/company";
+---
+
+<Base
+  page="company-page"
+  title="Nordisk Grup"
+  description="Nordisk Grup construiește case, blocuri și hale. Fundații, structuri de rezistență, case la roșu și la cheie, hale și depozite. 0 755 626 756."
+>
+  <Header label="Produse" href="/" />
+  <main id="top">
+    <section>
+      <div class="wrap intro">
+        <div class="intro-copy">
+          <p class="kicker">Construcții</p>
+          <h1>Nordisk Grup</h1>
+          <p class="deck">Case, blocuri și hale, de la fundație până la acoperiș</p>
+          <p class="lead">
+            Nordisk Grup este o firmă de construcții pentru lucrări rezidențiale și industriale. Construim de la săpătură și fundație până la structură, zidărie și acoperiș. Puteți lua o casă la roșu sau la cheie, o hală, sau doar etapa de care aveți nevoie. La proiectele mari putem coordona tot șantierul.
+          </p>
+        </div>
+        <figure>
+          <img src={heroPhoto.src} width={heroPhoto.width} height={heroPhoto.height} alt={heroPhoto.alt} />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="lucrari">
+      <div class="wrap">
+        <h2 class="section-title">Ce executăm</h2>
+        <div class="services">
+          {
+            services.map((service) => (
+              <article>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+              </article>
+            ))
+          }
+        </div>
+        <div class="note">
+          <h3>{generalContract.title}</h3>
+          <p>{generalContract.text}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">Din șantier</h2>
+        <div class="gallery">
+          {
+            gallery.map((photo) => (
+              <figure>
+                <img src={photo.src} width={photo.width} height={photo.height} alt={photo.alt} loading="lazy" />
+                <figcaption>{photo.caption}</figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proiecte">
+      <div class="wrap">
+        <h2 class="section-title">Proiecte</h2>
+        <dl class="jobs">
+          {
+            projects.map((project) => (
+              <div class="job">
+                <dt>{project.title}</dt>
+                <dd>{project.place}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    <Contact note="Pentru o lucrare nouă sau pentru o etapă de șantier." />
+  </main>
+  <Footer label="Nordisk Grup" linkHref="/" linkLabel="Produse" />
+</Base>

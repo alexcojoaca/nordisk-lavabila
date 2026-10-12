@@ -1,0 +1,16 @@
+---
+interface Props {
+  label: string;
+  linkHref?: string;
+  linkLabel?: string;
+}
+
+const { label, linkHref, linkLabel } = Astro.props;
+---
+
+<footer>
+  <div class="wrap foot">
+    <span>{label}</span>
+    {linkHref && linkLabel && <a href={linkHref}>{linkLabel}</a>}
+  </div>
+</footer>

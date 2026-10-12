@@ -1,0 +1,15 @@
+---
+interface Props {
+  label: string;
+  href: string;
+}
+
+const { label, href } = Astro.props;
+---
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href={href}>{label}</a>
+    <a class="nav-card" href="/#blue-card">Blue Card</a>
+  </div>
+</header>

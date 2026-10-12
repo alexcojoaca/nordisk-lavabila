@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import { products } from "../data/products";
+import { site } from "../data/site";
+---
+
+<Base
+  page="products-page"
+  title="Nordisk"
+  description="Nordisk. Vopsea termoizolantă: 2 mm egal 15 cm de polistiren. Vopsea lavabilă de exterior, rezistentă la intemperii. Blue Card, adeziune cu asigurare."
+>
+  <Header label="Nordisk" href="/despre" />
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <h1>Vopsea termoizolantă<br />Lavabilă de exterior</h1>
+        <p class="lead">
+          Un strat de 2 mm înlocuiește 15 cm de polistiren și crește eficiența energetică a clădirii. Pentru fațadă, lavabila de exterior rezistă la intemperii și lasă o acoperire uniformă, cu finisaj perlat.
+        </p>
+      </div>
+    </section>
+
+    <section class="products" id="produse">
+      <div class="wrap">
+        <h2 class="section-title">Produse</h2>
+        <div class="grid">
+          {
+            products.map((product) => (
+              <a class="product" id={product.id} href={product.href}>
+                <figure>
+                  <img src={product.image} width={product.imageWidth} height={product.imageHeight} alt={product.alt} />
+                </figure>
+                <h2>{product.title}</h2>
+                <p>{product.description}</p>
+                <span class="more">
+                  Achiziționează
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="card-band" id="blue-card">
+      <div class="wrap card-layout">
+        <div class="card-copy">
+          <p class="kicker">Blue Card</p>
+          <h2>Abonați-vă la<br />Blue Card.</h2>
+          <p>Adeziune cu asigurare.</p>
+        </div>
+        <a class="paycard" href={site.blueCardUrl} aria-label="Abonează-te la Blue Card">
+          <span class="stamp">Nordisk</span>
+          <span class="paycard-name">Blue Card</span>
+          <span class="pay-foot">
+            <span>Abonează-te</span>
+            <span class="go" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer label="Nordisk" />
+</Base>
