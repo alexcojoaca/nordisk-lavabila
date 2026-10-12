@@ -17,7 +17,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const phoneKey = digits(phone);
 
   if (firstName.length < 2 || lastName.length < 2 || phoneKey.length < 8 || password.length < 6) {
-    return go(request, "/blue-card?eroare=completeaza");
+    return go(request, "/blue-card?eroare=completeaza#formular");
   }
 
   const existing = await findByPhone(phoneKey);
@@ -26,7 +26,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       cookies.set("nordisk_member", sign(existing.id), cookieOptions(request));
       return go(request, "/blue-card/cont");
     }
-    return go(request, "/blue-card?eroare=exista");
+    return go(request, "/blue-card?eroare=exista#formular");
   }
 
   const subscriber = await addSubscriber({
@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     phoneKey,
     passwordHash: hashPassword(password),
   });
-  if (!subscriber) return go(request, "/blue-card?eroare=exista");
+  if (!subscriber) return go(request, "/blue-card?eroare=exista#formular");
 
   cookies.set("nordisk_member", sign(subscriber.id), cookieOptions(request));
   return go(request, "/blue-card/cont");

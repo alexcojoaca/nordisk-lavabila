@@ -20,7 +20,7 @@ const errors: Record<string, string> = {
   description="Blue Card este certificarea digitală Nordisk Grup pentru meseriașii din construcții. Profil verificat, vizibilitate și cereri de lucrări."
 >
   <Header label="Nordisk" href="/despre" rightLabel="Produse" rightHref="/" />
-  <main id="top">
+  <main id="top" class="blue-page">
     <section>
       <div class="wrap intro">
         <div class="intro-copy">
@@ -30,45 +30,9 @@ const errors: Record<string, string> = {
           <p class="lead">
             Completezi datele și primești cardul, cu numele tău și un cod unic.
           </p>
-          {error && errors[error] && <p class="notice bad">{errors[error]}</p>}
-          <form class="form" method="post" action="/api/blue-card/register">
-            <label>
-              Prenume
-              <input name="firstName" autocomplete="given-name" required />
-            </label>
-            <label>
-              Nume
-              <input name="lastName" autocomplete="family-name" required />
-            </label>
-            <label>
-              Număr de telefon
-              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
-            </label>
-            <label>
-              Parolă
-              <input name="password" type="password" autocomplete="new-password" minlength="6" required />
-            </label>
-            <button class="btn" type="submit">Primește Blue Card</button>
-          </form>
+          <a class="btn" href="#formular">Fă-ți Blue Card</a>
         </div>
         <BlueCardFace spin />
-      </div>
-    </section>
-
-    <section class="section" id="intrare">
-      <div class="wrap">
-        <h2 class="section-title">Ai deja Blue Card</h2>
-        <form class="form" method="post" action="/api/blue-card/login">
-          <label>
-            Număr de telefon
-            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
-          </label>
-          <label>
-            Parolă
-            <input name="password" type="password" autocomplete="current-password" required />
-          </label>
-          <button class="btn" type="submit">Deschide cardul</button>
-        </form>
       </div>
     </section>
 
@@ -105,6 +69,50 @@ const errors: Record<string, string> = {
     </section>
 
     <Contact note="Pentru Blue Card sau pentru o verificare." />
+
+    <section class="section" id="intrare">
+      <div class="wrap">
+        <h2 class="section-title">Ai deja Blue Card</h2>
+        {error === "intrare" && <p class="notice bad">{errors.intrare}</p>}
+        <form class="form" method="post" action="/api/blue-card/login">
+          <label>
+            Număr de telefon
+            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <label>
+            Parolă
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="btn" type="submit">Deschide cardul</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="formular">
+      <div class="wrap">
+        <h2 class="section-title">Primește Blue Card</h2>
+        {error && error !== "intrare" && errors[error] && <p class="notice bad">{errors[error]}</p>}
+        <form class="form" method="post" action="/api/blue-card/register">
+          <label>
+            Prenume
+            <input name="firstName" autocomplete="given-name" required />
+          </label>
+          <label>
+            Nume
+            <input name="lastName" autocomplete="family-name" required />
+          </label>
+          <label>
+            Număr de telefon
+            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <label>
+            Parolă
+            <input name="password" type="password" autocomplete="new-password" minlength="6" required />
+          </label>
+          <button class="btn" type="submit">Primește Blue Card</button>
+        </form>
+      </div>
+    </section>
   </main>
   <Footer />
 </Base>
