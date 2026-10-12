@@ -1,14 +1,10 @@
 import type { APIRoute } from "astro";
-import { checkPassword, cookieOptions, hashPassword, sign } from "../../../lib/auth";
+import { checkPassword, hashPassword, redirectTo, sign } from "../../../lib/auth";
 import { addSubscriber, digits, findByPhone } from "../../../lib/store";
 
 export const prerender = false;
 
-function go(request: Request, path: string) {
-  return Response.redirect(new URL(path, request.url), 303);
-}
-
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request }) => {
   const form = await request.formData();
   const firstName = String(form.get("firstName") || "").trim();
   const lastName = String(form.get("lastName") || "").trim();
@@ -17,16 +13,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const phoneKey = digits(phone);
 
   if (firstName.length < 2 || lastName.length < 2 || phoneKey.length < 8 || password.length < 6) {
-    return go(request, "/blue-card?eroare=completeaza#formular");
+    return redirectTo(request, "/blue-card?eroare=completeaza#formular");
   }
 
   const existing = await findByPhone(phoneKey);
   if (existing) {
     if (checkPassword(password, existing.passwordHash)) {
-      cookies.set("nordisk_member", sign(existing.id), cookieOptions(request));
-      return go(request, "/blue-card/cont");
+      return redirectTo(request, "/blue-card/cont", { set: ["nordisk_member", sign(existing.id)] });
     }
-    return go(request, "/blue-card?eroare=exista#formular");
+    return redirectTo(request, "/blue-card?eroare=exista#formular");
   }
 
   const subscriber = await addSubscriber({
@@ -36,9 +31,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     phoneKey,
     passwordHash: hashPassword(password),
   }).catch(() => undefined);
-  if (subscriber === undefined) return go(request, "/blue-card?eroare=server#formular");
-  if (!subscriber) return go(request, "/blue-card?eroare=exista#formular");
+  if (subscriber === undefined) return redirectTo(request, "/blue-card?eroare=server#formular");
+  if (!subscriber) return redirectTo(request, "/blue-card?eroare=exista#formular");
 
-  cookies.set("nordisk_member", sign(subscriber.id), cookieOptions(request));
-  return go(request, "/blue-card/cont");
+  return redirectTo(request, "/blue-card/cont", { set: ["nordisk_member", sign(subscriber.id)] });
 };

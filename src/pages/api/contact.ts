@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { redirectTo } from "../../lib/auth";
 import { addMessage } from "../../lib/store";
 
 export const prerender = false;
@@ -10,9 +11,9 @@ export const POST: APIRoute = async ({ request }) => {
   const message = String(form.get("message") || "").trim();
 
   if (name.length < 2 || contact.length < 3 || message.length < 5) {
-    return Response.redirect(new URL("/despre?eroare=1#mesaj", request.url), 303);
+    return redirectTo(request, "/despre?eroare=1#mesaj");
   }
 
   await addMessage({ name, contact, message });
-  return Response.redirect(new URL("/despre?trimis=1#mesaj", request.url), 303);
+  return redirectTo(request, "/despre?trimis=1#mesaj");
 };

@@ -7,5 +7,11 @@ export default defineConfig({
   adapter: vercel(),
   security: {
     checkOrigin: false,
+    allowedDomains: [
+      { hostname: "nordisk-lavabila.vercel.app" },
+      { hostname: "*.vercel.app" },
+      { hostname: "localhost" },
+      { hostname: "127.0.0.1" },
+    ],
   },
 });

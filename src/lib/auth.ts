@@ -37,13 +37,34 @@ export function readSigned(token: string | undefined) {
   return Buffer.from(body, "base64url").toString();
 }
 
-export function cookieOptions(request?: Request) {
-  const secure = request ? new URL(request.url).protocol === "https:" : false;
-  return {
-    httpOnly: true,
-    sameSite: "lax" as const,
-    secure,
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30,
-  };
+const month = 60 * 60 * 24 * 30;
+
+export function originOf(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const host = forwarded || request.headers.get("host") || "";
+  const proto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  if (host) {
+    const scheme = proto || (host.startsWith("localhost") || host.startsWith("127.0.0.1") ? "http" : "https");
+    return `${scheme}://${host}`;
+  }
+  return new URL(request.url).origin;
+}
+
+function sessionCookie(name: string, value: string, secure: boolean, maxAge = month) {
+  const parts = [`${name}=${value}`, "Path=/", "HttpOnly", "SameSite=Lax", `Max-Age=${maxAge}`];
+  if (secure) parts.push("Secure");
+  return parts.join("; ");
+}
+
+export function redirectTo(
+  request: Request,
+  path: string,
+  extra?: { set?: [string, string]; clear?: string },
+) {
+  const location = new URL(path, originOf(request));
+  const headers = new Headers({ Location: location.toString() });
+  const secure = location.protocol === "https:";
+  if (extra?.set) headers.append("Set-Cookie", sessionCookie(extra.set[0], extra.set[1], secure));
+  if (extra?.clear) headers.append("Set-Cookie", sessionCookie(extra.clear, "", secure, 0));
+  return new Response(null, { status: 303, statusText: "See Other", headers });
 }
