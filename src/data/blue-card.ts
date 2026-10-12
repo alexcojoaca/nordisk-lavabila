@@ -1,18 +1,18 @@
 export const benefits = [
   {
-    title: "Cardul, pe loc",
-    text: "După formular, cardul se deschide imediat. Pe el stau numele tău și un cod unic, de forma NG- urmat de șase caractere.",
+    title: "Pune-ți meseria în valoare",
+    text: "Cardul poartă numele tău. Arată că lucrezi într-un domeniu esențial: zidărie, faianță, electricitate, instalații, zugrăveală, fier-beton sau altă meserie de șantier.",
   },
   {
-    title: "Contul tău",
-    text: "Cu telefonul și parola revii oricând. Din cont vezi cardul, îl poți arăta la client sau pe șantier și poți ieși când ai terminat.",
+    title: "Un pas spre profesionalizare",
+    text: "În locul unui număr pierdut prin telefon, ai un card de arătat. Pe el stau numele tău și un cod unic, gata pentru client sau pentru șantier.",
   },
   {
-    title: "Un cod pentru fiecare",
-    text: "Codul nu se repetă. Nordisk îl vede împreună cu numele și telefonul, ca să știe cine s-a înscris.",
+    title: "Legătura cu Nordisk Grup",
+    text: "Nordisk vede cine s-a înscris, împreună cu numele și telefonul. De aici poți afla lucrările și produsele firmei.",
   },
   {
-    title: "Pentru meseria de șantier",
-    text: "Blue Card este pentru oamenii care lucrează în construcții: zugrăveală, zidărie, instalații, fier-beton, finisaje și echipe de șantier.",
+    title: "Între meseriași",
+    text: "Blue Card este pentru oamenii care muncesc în construcții și vor să fie luați în serios. Fiecare primește propriul cod, NG- urmat de șase caractere.",
   },
 ];

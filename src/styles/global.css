@@ -463,9 +463,23 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
   .lead { font-size: 17px; }
   .grid { grid-template-columns: 1fr; gap: 36px; }
   .products { padding: 28px 0 56px; }
-  .card-band { padding: 56px 0; }
-  .card-layout { grid-template-columns: 1fr; gap: 28px; }
-  .paycard { max-width: 460px; }
+  .card-band { padding: 40px 0; }
+  .card-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .card-band .spin-scene,
+  .card-band .spin-card,
+  .card-band .paycard {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .card-band .paycard {
+    min-height: 0;
+    aspect-ratio: 1.7 / 1;
+    padding: 18px 18px 16px;
+  }
   .contact { padding: 4px 0 28px; }
   .intro {
     grid-template-columns: 1fr;
@@ -546,6 +560,7 @@ footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
   align-items: center;
 }
 .hero-actions .btn { display: inline-flex; align-items: center; }
+.intro-copy .hero-actions { margin-top: 22px; }
 .blue-page .spin-scene { width: min(100%, 440px); }
 .blue-page .paycard {
   min-height: 0;
