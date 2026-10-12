@@ -11,5 +11,5 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   const form = await request.formData();
   await deleteMessage(String(form.get("id") || ""));
-  return redirectTo(request, "/admin#cereri");
+  return redirectTo(request, "/admin?tab=nordisk");
 };

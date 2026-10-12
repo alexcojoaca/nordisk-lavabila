@@ -27,9 +27,12 @@ const errors: Record<string, string> = {
           <p class="kicker">Nordisk Grup</p>
           <h1>Blue Card</h1>
           <p class="deck">Carnetul digital al meseriașului verificat</p>
-          <a class="btn" href="#formular">Fă-ți Blue Card</a>
         </div>
         <BlueCardFace />
+        <div class="hero-actions">
+          <a class="btn" href="#formular">Fă-ți Blue Card</a>
+          <a class="btn ghost" href="#conectare">Conectare</a>
+        </div>
       </div>
     </section>
 
@@ -105,4 +108,13 @@ const errors: Record<string, string> = {
     </section>
   </main>
   <Footer />
+  <script>
+    const fold = document.getElementById("conectare");
+    if (fold instanceof HTMLDetailsElement && location.hash === "#conectare") fold.open = true;
+    document.querySelectorAll('a[href="#conectare"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        if (fold instanceof HTMLDetailsElement) fold.open = true;
+      });
+    });
+  </script>
 </Base>

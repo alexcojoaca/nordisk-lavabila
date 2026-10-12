@@ -17,5 +17,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   if (action === "paid") await setPaid(id, true);
   if (action === "unpaid") await setPaid(id, false);
 
-  return redirectTo(request, "/admin#abonati");
+  const q = String(form.get("q") || "").trim();
+  const next = q ? `/admin?tab=card&q=${encodeURIComponent(q)}` : "/admin?tab=card";
+  return redirectTo(request, next);
 };

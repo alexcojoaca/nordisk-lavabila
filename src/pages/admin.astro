@@ -8,8 +8,19 @@ import { databaseReady, listMessages, listSubscribers } from "../lib/store";
 const loggedIn = readSigned(Astro.cookies.get("nordisk_admin")?.value) === "admin";
 const temporaryStore = !databaseReady();
 const error = Astro.url.searchParams.get("eroare") === "1";
+const tab = Astro.url.searchParams.get("tab") === "card" ? "card" : "nordisk";
+const query = (Astro.url.searchParams.get("q") || "").trim();
 const subscribers = loggedIn ? await listSubscribers() : [];
 const messages = loggedIn ? await listMessages() : [];
+const needle = query.toLowerCase();
+const needleDigits = query.replace(/\D/g, "");
+const visible = subscribers.filter((item) => {
+  if (!needle) return true;
+  const name = `${item.firstName} ${item.lastName}`.toLowerCase();
+  const phone = item.phone.toLowerCase();
+  const phoneDigits = item.phone.replace(/\D/g, "");
+  return name.includes(needle) || phone.includes(needle) || (needleDigits.length >= 3 && phoneDigits.includes(needleDigits));
+});
 
 function when(iso: string) {
   return new Date(iso).toLocaleString("ro-RO", { dateStyle: "medium", timeStyle: "short" });
@@ -47,50 +58,100 @@ function when(iso: string) {
           </div>
           {temporaryStore && <p class="notice">Baza de date nu e legată încă. Lista se poate goli.</p>}
 
-          <div class="admin-block" id="cereri">
-            <h2 class="section-title">Cereri Nordisk</h2>
-            {messages.length === 0 && <p class="empty">Nicio cerere.</p>}
-            {messages.map((item) => (
-              <article class="admin-row">
-                <strong>{item.name}</strong>
-                <span>{item.contact}</span>
-                <p>{item.message}</p>
-                <span class="muted">{when(item.createdAt)}</span>
-                <form method="post" action="/api/admin/message">
-                  <input type="hidden" name="id" value={item.id} />
-                  <button class="btn danger" type="submit">Șterge</button>
-                </form>
-              </article>
-            ))}
-          </div>
+          <nav class="admin-tabs" aria-label="Secțiuni">
+            <a href="/admin?tab=nordisk" class:list={{ active: tab === "nordisk" }} aria-current={tab === "nordisk" ? "page" : undefined}>
+              Nordisk
+              <span>{messages.length}</span>
+            </a>
+            <a href="/admin?tab=card" class:list={{ active: tab === "card" }} aria-current={tab === "card" ? "page" : undefined}>
+              Blue Card
+              <span>{subscribers.length}</span>
+            </a>
+          </nav>
 
-          <div class="admin-block" id="abonati">
-            <h2 class="section-title">Abonați Blue Card</h2>
-            {subscribers.length === 0 && <p class="empty">Niciun abonat.</p>}
-            {subscribers.map((item) => (
-              <article class="admin-row">
-                <strong>{item.firstName} {item.lastName}</strong>
-                <span>{item.phone}</span>
-                <span>{item.cardCode}</span>
-                <span class="muted">{item.paid ? "Plătit" : "Neplătit"} · {when(item.createdAt)}</span>
-                <div class="row-actions">
-                  <form method="post" action="/api/admin/subscriber">
-                    <input type="hidden" name="id" value={item.id} />
-                    <input type="hidden" name="action" value={item.paid ? "unpaid" : "paid"} />
-                    <button class="btn ghost" type="submit">{item.paid ? "Marchează neplătit" : "Marchează plătit"}</button>
-                  </form>
-                  <form method="post" action="/api/admin/subscriber">
-                    <input type="hidden" name="id" value={item.id} />
-                    <input type="hidden" name="action" value="delete" />
-                    <button class="btn danger" type="submit">Șterge abonatul</button>
-                  </form>
+          {
+            tab === "nordisk" ? (
+              <div class="admin-block">
+                <h2 class="section-title">Cereri Nordisk</h2>
+                {messages.length === 0 && <p class="empty">Nicio cerere.</p>}
+                <div class="member-grid">
+                  {messages.map((item) => (
+                    <article class="member-card">
+                      <header>
+                        <strong>{item.name}</strong>
+                        <span>{item.contact}</span>
+                      </header>
+                      <p>{item.message}</p>
+                      <span class="muted">{when(item.createdAt)}</span>
+                      <form method="post" action="/api/admin/message">
+                        <input type="hidden" name="id" value={item.id} />
+                        <button class="btn danger" type="submit">Șterge</button>
+                      </form>
+                    </article>
+                  ))}
                 </div>
-              </article>
-            ))}
-          </div>
+              </div>
+            ) : (
+              <div class="admin-block">
+                <h2 class="section-title">Abonați Blue Card</h2>
+                <form class="admin-search" method="get">
+                  <input type="hidden" name="tab" value="card" />
+                  <input name="q" value={query} placeholder="Caută după nume sau telefon" autocomplete="off" />
+                  <button class="btn" type="submit">Caută</button>
+                </form>
+                {subscribers.length === 0 && <p class="empty">Niciun abonat.</p>}
+                {subscribers.length > 0 && visible.length === 0 && <p class="empty">Nimeni nu se potrivește cu căutarea.</p>}
+                <div class="member-grid">
+                  {visible.map((item) => (
+                    <article class="member-card">
+                      <header>
+                        <strong>{item.firstName} {item.lastName}</strong>
+                        <span>{item.phone}</span>
+                      </header>
+                      <p class="member-code">{item.cardCode}</p>
+                      <span class:list={["badge", { paid: item.paid }]}>{item.paid ? "Plătit" : "Neplătit"}</span>
+                      <span class="muted">{when(item.createdAt)}</span>
+                      <button
+                        class="btn"
+                        type="button"
+                        data-print
+                        data-name={`${item.firstName} ${item.lastName}`}
+                        data-code={item.cardCode}
+                      >
+                        Descarcă pentru print
+                      </button>
+                      <div class="row-actions">
+                        <form method="post" action="/api/admin/subscriber">
+                          <input type="hidden" name="id" value={item.id} />
+                          <input type="hidden" name="q" value={query} />
+                          <input type="hidden" name="action" value={item.paid ? "unpaid" : "paid"} />
+                          <button class="btn ghost" type="submit">{item.paid ? "Marchează neplătit" : "Marchează plătit"}</button>
+                        </form>
+                        <form method="post" action="/api/admin/subscriber">
+                          <input type="hidden" name="id" value={item.id} />
+                          <input type="hidden" name="q" value={query} />
+                          <input type="hidden" name="action" value="delete" />
+                          <button class="btn danger" type="submit">Șterge</button>
+                        </form>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )
+          }
         </section>
       )
     }
   </main>
   <Footer />
+  <script>
+    import { downloadCardPair } from "../scripts/card-image";
+
+    document.querySelectorAll<HTMLButtonElement>("[data-print]").forEach((button) => {
+      button.addEventListener("click", () => {
+        downloadCardPair(button.dataset.name || "", button.dataset.code || "");
+      });
+    });
+  </script>
 </Base>

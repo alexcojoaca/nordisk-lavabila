@@ -14,5 +14,17 @@ const name = `${subscriber.firstName} ${subscriber.lastName}`;
 <AccountFrame title="Cont — Blue Card" name={name} active="card">
   <div class="account-card">
     <BlueCardFace name={name} code={subscriber.cardCode} />
+    <button class="btn" type="button" id="download-card" data-name={name} data-code={subscriber.cardCode}>
+      Descarcă cardul
+    </button>
   </div>
 </AccountFrame>
+<script>
+  import { downloadCardFront } from "../../scripts/card-image";
+
+  document.getElementById("download-card")?.addEventListener("click", (event) => {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLButtonElement)) return;
+    downloadCardFront(button.dataset.name || "", button.dataset.code || "");
+  });
+</script>
